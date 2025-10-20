@@ -26,4 +26,34 @@ if menu == "Listar Produtos":
                     st.write(f"💰 Preço: R$ {p['preco']:.2f}")
                     st.write(f"📦 Estoque: {p['estoque']} unidades")
                     st.write(f"🏷️ Categoria: {p['categoria']}")
- 
+        else:
+            st.info("Esse produto ainda não foi cadastrado!!")
+    else:
+        st.error("Erro ao buscar produto na api")
+elif menu == "Adicionar Produto":
+    st.subheader("Cadastrar novo produto")
+
+    with st.form("form_produto"):
+        nome = st.text_input("Nome do produto")
+        descricao = st.text_area("Descrição")
+        preço = st.text_input("$Preço")
+        estoque = st.text_input("Estoque")
+        categoria = st.text_input("Categoria")
+        enviar = st.form_submit_button("Salvar")
+
+        if enviar:
+            dados = {
+                "nome": nome,
+                "descricao": descricao,
+                "preco": preco,
+                "estoque": estoque,
+                "categoria": categoria
+            }
+
+            response = requests.post(f"{BASE_URL}/produtos", json=dados)
+
+            if response.status_code == 200:
+                st.success("✅ Produto cadastrado com sucesso!")
+            else:
+                st.error("❌ Erro ao cadastrar produto.")
+    
