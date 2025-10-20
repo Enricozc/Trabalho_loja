@@ -7,7 +7,7 @@ st.set_page_config(page_title="Gerenciador de Produtos", page_icon="🛒")
 st.title("🛒 Gerenciador de Produtos")
 
 # --- MENU ---
-menu = st.sidebar.selectbox("Menu", ["Listar Produtos", "Adicionar Produto"])
+menu = st.sidebar.selectbox("Menu", ["Listar Produtos", "Adicionar Produto", "Buscar Produto", "Atualizar Produto",  "Deletar Produto"])
 
 # --- LISTAR PRODUTOS ---
 if menu == "Listar Produtos":
@@ -76,6 +76,7 @@ elif menu == "Buscar Produto":
         else:
             st.error("Erro ao buscar produto.")
 
+
 elif menu == "Atualizar Produto":
     st.subheader("Atualizar produto existente")
 
@@ -101,6 +102,21 @@ elif menu == "Atualizar Produto":
                         }
                         response_update = requests.put(f"{BASE_URL}/produtos/{nome_update}", json=dados_update)
                         if response_update.status_code == 200:
-                            st.success("Produto atualizado com sucesso!")
+                            st.success("✅ Produto atualizado com sucesso!")
                         else:
-                            st.error(" Erro ao atualizar produto.")
+                            st.error("❌ Erro ao atualizar produto.")
+            else:
+                st.info("Produto não encontrado.")
+        else:
+            st.error("Erro ao buscar produto.")
+
+elif menu == "Deletar Produto":
+    st.subheader("Deletar produto")
+
+    nome_delete = st.text_input("Nome do produto para deletar")
+    if st.button("Deletar"):
+        response_delete = requests.delete(f"{BASE_URL}/produtos/{nome_delete}")
+        if response_delete.status_code == 200:
+            st.success("✅ Produto deletado com sucesso!")
+        else:
+            st.error("❌ Erro ao deletar produto.")
