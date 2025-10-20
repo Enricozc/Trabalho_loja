@@ -45,7 +45,7 @@ elif menu == "Adicionar Produto":
             dados = {
                 "nome": nome,
                 "descricao": descricao,
-                "preco": preco,
+                "preco": preço, 
                 "estoque": estoque,
                 "categoria": categoria
             }
@@ -57,3 +57,21 @@ elif menu == "Adicionar Produto":
             else:
                 st.error("❌ Erro ao cadastrar produto.")
     
+elif menu == "Buscar Produto":
+    st.subheader("Buscar produto pelo nome")
+
+    nome_busca = st.text_input("Digite o nome do produto para buscar")
+    if st.button("Buscar"):
+        response = requests.get(f"{BASE_URL}/produtos/{nome_busca}")
+        if response.status_code == 200:
+            produto = response.json()
+            if produto:
+                st.markdown(f"### {produto['nome']}")
+                st.write(f"📝 Descrição: {produto['descricao']}")
+                st.write(f"💰 Preço: R$ {produto['preco']:.2f}")
+                st.write(f"📦 Estoque: {produto['estoque']} unidades")
+                st.write(f"🏷️ Categoria: {produto['categoria']}")
+            else:
+                st.info("Produto não encontrado.")
+        else:
+            st.error("Erro ao buscar produto.")
