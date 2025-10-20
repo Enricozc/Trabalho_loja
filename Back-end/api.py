@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import funcao
 
 
-app = FastAPI(title="Gerenciador de Loja")
+app = FastAPI(title="Gerenciador de Mercado")
 
 @app.get("/")
 def home():

@@ -16,9 +16,9 @@ def criar_tabela():
                 )
             """)
             conexao.commit()
-            print("✅ Tabela 'produtos' criada com sucesso!")
+            print("Tabela 'produtos' criada com sucesso!")
         except Exception as erro:
-            print(f"❌ Erro ao criar tabela: {erro}")
+            print(f"Erro ao criar tabela: {erro}")
         finally:
             cursor.close()
             conexao.close()
@@ -40,9 +40,9 @@ def inserir_produto(nome, descricao, preco, estoque, categoria):
                 (nome, descricao, preco, estoque, categoria)
             )
             conexao.commit()
-            print("✅ Produto inserido com sucesso!")
+            print("Produto inserido com sucesso!")
         except Exception as erro:
-            print(f"❌ Erro ao inserir produto: {erro}")
+            print(f"Erro ao inserir produto: {erro}")
         finally:
             cursor.close()
             conexao.close()
@@ -57,7 +57,7 @@ def listar_produtos():
             cursor.execute("SELECT * FROM produtos ORDER BY id")
             return cursor.fetchall()
         except Exception as erro:
-            print(f"❌ Erro ao listar produtos: {erro}")
+            print(f"Erro ao listar produtos: {erro}")
         finally:
             cursor.close()
             conexao.close()
@@ -89,9 +89,9 @@ def atualizar_produto(id_produto, novo_preco=None, novo_estoque=None):
                 return
 
             conexao.commit()
-            print("✅ Produto atualizado com sucesso!")
+            print("Produto atualizado com sucesso!")
         except Exception as erro:
-            print(f"❌ Erro ao atualizar produto: {erro}")
+            print(f"Erro ao atualizar produto: {erro}")
         finally:
             cursor.close()
             conexao.close()
@@ -103,9 +103,9 @@ def deletar_produto(id_produto):
         try:
             cursor.execute("DELETE FROM produtos WHERE id = %s", (id_produto,))
             conexao.commit()
-            print("🗑️ Produto deletado com sucesso!")
+            print("Produto deletado com sucesso!")
         except Exception as erro:
-            print(f"❌ Erro ao deletar produto: {erro}")
+            print(f"Erro ao deletar produto: {erro}")
         finally:
             cursor.close()
             conexao.close()
@@ -122,10 +122,10 @@ def buscar_produto(id_produto):
             if produto:
                 return produto
             else:
-                print("⚠️ Produto não encontrado.")
+                print("Produto não encontrado.")
                 return None
         except Exception as erro:
-            print(f"❌ Erro ao buscar produto: {erro}")
+            print(f"Erro ao buscar produto: {erro}")
         finally:
             cursor.close()
             conexao.close()
