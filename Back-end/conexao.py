@@ -2,8 +2,6 @@ from dotenv import load_dotenv
 import os
 import psycopg2
 
-
-#carregar variaves do .env
 load_dotenv()
 
 params = {
@@ -17,10 +15,7 @@ params = {
 def conectar():
     try:
         conexao = psycopg2.connect(**params)
-        cursor = conexao.cursor()
-        print("deu certo")
-        return conexao, cursor
+        print(" Conexão bem-sucedida com o banco de dados!")
+        return conexao
     except Exception as erro:
-        print("Erro ao conectar ao banco de dados:", {erro})
-        return None, None
-conectar()
+        print(" Erro ao conectar:", erro)
