@@ -8,7 +8,7 @@ def criar_tabela():
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS produtos (
                     id SERIAL PRIMARY KEY,
-                    nome TEXT NOT NULL,
+                    nome TEXT NOT NULL, 
                     descricao TEXT,
                     preco REAL NOT NULL,
                     estoque INTEGER NOT NULL,
