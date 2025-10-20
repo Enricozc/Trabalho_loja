@@ -53,9 +53,9 @@ elif menu == "Adicionar Produto":
             response = requests.post(f"{BASE_URL}/produtos", json=dados)
 
             if response.status_code == 200:
-                st.success("✅ Produto cadastrado com sucesso!")
+                st.success(" Produto cadastrado com sucesso!")
             else:
-                st.error("❌ Erro ao cadastrar produto.")
+                st.error(" Erro ao cadastrar produto.")
     
 elif menu == "Buscar Produto":
     st.subheader("Buscar produto pelo nome")
@@ -75,3 +75,32 @@ elif menu == "Buscar Produto":
                 st.info("Produto não encontrado.")
         else:
             st.error("Erro ao buscar produto.")
+
+elif menu == "Atualizar Produto":
+    st.subheader("Atualizar produto existente")
+
+    nome_update = st.text_input("Nome do produto para atualizar")
+    if st.button("Buscar produto para atualizar"):
+        response = requests.get(f"{BASE_URL}/produtos/{nome_update}")
+        if response.status_code == 200:
+            produto = response.json()
+            if produto:
+                with st.form("form_update"):
+                    descricao = st.text_area("Descrição", value=produto["descricao"])
+                    preco = st.text_input("Preço", value=str(produto["preco"]))
+                    estoque = st.text_input("Estoque", value=str(produto["estoque"]))
+                    categoria = st.text_input("Categoria", value=produto["categoria"])
+                    enviar_update = st.form_submit_button("Atualizar")
+
+                    if enviar_update:
+                        dados_update = {
+                            "descricao": descricao,
+                            "preco": preco,
+                            "estoque": estoque,
+                            "categoria": categoria
+                        }
+                        response_update = requests.put(f"{BASE_URL}/produtos/{nome_update}", json=dados_update)
+                        if response_update.status_code == 200:
+                            st.success("Produto atualizado com sucesso!")
+                        else:
+                            st.error(" Erro ao atualizar produto.")
